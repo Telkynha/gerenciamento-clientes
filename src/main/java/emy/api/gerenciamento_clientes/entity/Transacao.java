@@ -27,6 +27,10 @@ public class Transacao {
     @Column(length = 300)
     private String descricao;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoTransacao tipo;
+
 }
 
 // Usada para representar tanto as despesas como as receitas

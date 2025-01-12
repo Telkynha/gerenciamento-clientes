@@ -15,12 +15,8 @@ public class Transacao {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "remetente_id", nullable = false)
-    private Conta remetente;
-
-    @ManyToOne
-    @JoinColumn(name = "destinatario_id", nullable = false)
-    private Conta destinatario;
+    @JoinColumn(name = "conta_id", nullable = false)
+    private Conta conta;
 
     @Column(nullable = false)
     private BigDecimal valor;

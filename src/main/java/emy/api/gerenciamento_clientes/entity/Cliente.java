@@ -6,7 +6,6 @@ import lombok.Data;
 @Entity
 @Data
 public class Cliente {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +25,6 @@ public class Cliente {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "conta_id", referencedColumnName = "id")
     private Conta conta;
-
 }
 
 //A conta é criada assim que o cliente for criado, mantendo os dois ligados

@@ -9,7 +9,6 @@ import java.util.List;
 @Entity
 @Data
 public class Conta {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +24,6 @@ public class Conta {
 
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transacao> despesas;
-
 }
 
 // Conta é ligada a um cliente

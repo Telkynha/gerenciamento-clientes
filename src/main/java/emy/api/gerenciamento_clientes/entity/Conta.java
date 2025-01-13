@@ -20,10 +20,7 @@ public class Conta {
     private Cliente titular;
 
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Transacao> receitas;
-
-    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Transacao> despesas;
+    private List<Transacao> historico;
 }
 
 // Conta é ligada a um cliente

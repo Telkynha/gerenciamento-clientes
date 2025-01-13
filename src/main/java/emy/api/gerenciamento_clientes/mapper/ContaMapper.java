@@ -1,6 +1,7 @@
 package emy.api.gerenciamento_clientes.mapper;
 
 import emy.api.gerenciamento_clientes.dto.ContaResponse;
+import emy.api.gerenciamento_clientes.dto.TransacaoDTO;
 import emy.api.gerenciamento_clientes.entity.Cliente;
 import emy.api.gerenciamento_clientes.entity.Conta;
 
@@ -24,9 +25,8 @@ public class ContaMapper {
             );
         }
 
-        List<ContaResponse.TransacaoResponse> historico = conta.getHistorico().stream()
-                .map(transacao -> new ContaResponse.TransacaoResponse(
-                        transacao.getId(),
+        List<TransacaoDTO> historico = conta.getHistorico().stream()
+                .map(transacao -> new TransacaoDTO(
                         transacao.getValor(),
                         transacao.getDescricao(),
                         transacao.getDataHora(),

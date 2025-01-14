@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/transacao")
@@ -30,11 +28,10 @@ public class TransacaoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TransacaoDTO> buscarTransacaoPorId(@PathVariable Long id) {
-        Transacao transacao = service.buscarPorId(id);
-        TransacaoDTO response = TransacaoMapper.toResponse(transacao);
-        return ResponseEntity.ok(response);
+    @PatchMapping("/{id}")
+    public ResponseEntity<TransacaoDTO> editarTransacao(@PathVariable Long id, @RequestBody @Valid TransacaoDTO dto) {
+        Transacao transacao = service.editarTransacao(id, dto);
+        return ResponseEntity.ok(TransacaoMapper.toResponse(transacao));
     }
 
     @DeleteMapping("/{id}")
@@ -43,8 +40,15 @@ public class TransacaoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<TransacaoDTO> buscarTransacaoPorId(@PathVariable Long id) {
+        Transacao transacao = service.buscarPorId(id);
+        TransacaoDTO response = TransacaoMapper.toResponse(transacao);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping
-    public ResponseEntity<List<TransacaoDTO>> listarTransacoes(
+    public ResponseEntity<String> listarTransacoes(
             @RequestParam Long contaId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal) {
@@ -53,10 +57,9 @@ public class TransacaoController {
             return ResponseEntity.badRequest().body(null);
         }
 
-        List<Transacao> historico = service.buscarPorPeriodo(contaId, dataInicial, dataFinal);
-        List<TransacaoDTO> response = historico.stream()
-                .map(TransacaoMapper::toResponse)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(response);
+        String historico = service.listarTransacoes(contaId, dataInicial, dataFinal);
+        return ResponseEntity.ok(historico);
     }
+
+
 }

@@ -30,4 +30,10 @@ public class ContaController {
         service.atualizarSaldo(conta, request.getSaldo());
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{id}/saldo")
+    public ResponseEntity<String> imprimirSaldo(@PathVariable Long id) {
+        String saldo = service.imprimirSaldo(id);
+        return ResponseEntity.ok(saldo);
+    }
 }

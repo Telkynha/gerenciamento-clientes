@@ -30,4 +30,9 @@ public class ContaService {
         conta.setSaldo(conta.getSaldo().add(valor));
         repository.save(conta);
     }
+
+    public String imprimirSaldo(Long contaId) {
+        Conta conta = buscarContaPorId(contaId);
+        return String.format("Saldo da conta: R$ %.2f", conta.getSaldo());
+    }
 }

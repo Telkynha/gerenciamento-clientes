@@ -55,6 +55,4 @@ public class TransacaoController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(response);
     }
-
-
 }

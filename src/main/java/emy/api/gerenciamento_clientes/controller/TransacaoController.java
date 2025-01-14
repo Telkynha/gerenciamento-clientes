@@ -49,6 +49,10 @@ public class TransacaoController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal) {
 
+        if (dataFinal.isBefore(dataInicial)) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
         List<Transacao> historico = service.buscarPorPeriodo(contaId, dataInicial, dataFinal);
         List<TransacaoDTO> response = historico.stream()
                 .map(TransacaoMapper::toResponse)

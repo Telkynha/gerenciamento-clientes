@@ -24,13 +24,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<String> autenticar(@RequestBody @Valid ClienteRequest request) {
-        Cliente cliente = service.buscarPorEmail(request.getEmail());
-
-        if (!new BCryptPasswordEncoder().matches(request.getSenha(), cliente.getSenha())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais invalidas");
-        }
-
+        Cliente cliente = service.autenticar(request.getEmail(), request.getSenha());
         String token = util.gerarToken(cliente.getEmail());
         return ResponseEntity.ok(token);
     }
+
 }

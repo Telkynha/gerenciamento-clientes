@@ -30,9 +30,4 @@ public class ClienteService {
         return repository.findById(id)
                 .orElseThrow(() -> new ClienteNotFoundException(id));
     }
-
-    public Cliente buscarPorEmail(String email) {
-        return repository.findByEmail(email)
-                .orElseThrow(() -> new ClienteNotFoundException("Nenhum cliente foi encontrado com email: " + email));
-    }
 }

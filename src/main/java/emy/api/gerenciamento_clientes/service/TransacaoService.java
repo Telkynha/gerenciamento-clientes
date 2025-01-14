@@ -3,6 +3,7 @@ package emy.api.gerenciamento_clientes.service;
 import emy.api.gerenciamento_clientes.entity.Conta;
 import emy.api.gerenciamento_clientes.entity.TipoTransacao;
 import emy.api.gerenciamento_clientes.entity.Transacao;
+import emy.api.gerenciamento_clientes.exception.DataIllegalException;
 import emy.api.gerenciamento_clientes.exception.SaldoInsuficienteException;
 import emy.api.gerenciamento_clientes.exception.TransacaoIllegalException;
 import emy.api.gerenciamento_clientes.exception.TransacaoNotFoundException;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -49,5 +52,18 @@ public class TransacaoService {
 
         contaService.atualizarSaldo(transacao.getConta(), saldoRevertido);
         repository.deleteById(id);
+    }
+
+    public Transacao buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new TransacaoNotFoundException());
+    }
+
+    public List<Transacao> buscarPorPeriodo(Long contaId, LocalDateTime dataInicial, LocalDateTime dataFinal) {
+        if (dataInicial.isAfter(dataFinal)) {
+            throw new DataIllegalException();
+        }
+
+        return repository.findByContaIdAndDataHoraBetween(contaId, dataInicial, dataFinal);
     }
 }

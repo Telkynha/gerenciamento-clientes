@@ -15,7 +15,7 @@ public class ClienteService {
     private final BCryptPasswordEncoder encoder;
 
     public Cliente salvarCliente(Cliente cliente) {
-        cliente.setEmail(encoder.encode(cliente.getSenha()));
+        cliente.setSenha(encoder.encode(cliente.getSenha()));
         return repository.save(cliente);
     }
 

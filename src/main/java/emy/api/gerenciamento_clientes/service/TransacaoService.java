@@ -30,7 +30,7 @@ public class TransacaoService {
                 ? transacao.getValor()
                 : transacao.getValor().negate();
 
-        if (conta.getSaldo().compareTo(novoSaldo) < 0) {
+        if (novoSaldo.compareTo(BigDecimal.ZERO) < 0) {
             throw new SaldoInsuficienteException();
         }
 

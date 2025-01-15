@@ -4,7 +4,6 @@ import emy.api.gerenciamento_clientes.entity.Cliente;
 import emy.api.gerenciamento_clientes.exception.ClienteNotFoundException;
 import emy.api.gerenciamento_clientes.exception.LoginFailedException;
 import emy.api.gerenciamento_clientes.repository.ClienteRepository;
-import jakarta.mail.AuthenticationFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

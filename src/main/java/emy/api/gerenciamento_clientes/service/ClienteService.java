@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ClienteService {
@@ -32,6 +34,11 @@ public class ClienteService {
                 .orElseThrow(() -> new ClienteNotFoundException(id));
     }
 
+    public Optional<Cliente> findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
+
     public Cliente buscarPorEmail(String email) {
         return repository.findByEmail(email)
                 .orElseThrow(() -> new ClienteNotFoundException("Nenhum cliente foi encontrado com email: " + email));
@@ -39,7 +46,7 @@ public class ClienteService {
 
     public Cliente autenticar(String email, String senha) {
         Cliente cliente = repository.findByEmail(email)
-                .orElseThrow(() -> new ClienteNotFoundException());
+                .orElseThrow(ClienteNotFoundException::new);
 
         if (!encoder.matches(senha, cliente.getSenha())) {
             throw new LoginFailedException();

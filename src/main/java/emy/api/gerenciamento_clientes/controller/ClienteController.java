@@ -28,6 +28,7 @@ public class ClienteController {
             @ApiResponse(code = 201, message = "Cliente salvo com sucesso"),
             @ApiResponse(code = 400, message = "Dados inválidos")
     })
+
     @PostMapping
     public ResponseEntity<ClienteResponse> salvarCliente(@RequestBody @Valid ClienteRequest request) {
         Cliente cliente = ClienteMapper.toEntity(request);

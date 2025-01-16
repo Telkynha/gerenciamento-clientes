@@ -9,8 +9,6 @@ Este projeto é uma API de Gerenciamento de Clientes desenvolvido em Java utiliz
 - [Configuração](#configuração)
 - [Uso](#uso)
 - [Endpoints](#endpoints)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
 
 ## Recursos
 

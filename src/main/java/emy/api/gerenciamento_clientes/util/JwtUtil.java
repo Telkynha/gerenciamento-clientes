@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -23,7 +25,10 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private long jwtExpirationMs;
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
+
     public String extractUsername(String token) {
+        logger.debug("Extraindo username do token");
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -41,6 +46,7 @@ public class JwtUtil {
     }
 
     public String generateToken(UserDetails userDetails) {
+        logger.info("Gerando token para o usuário: {}", userDetails.getUsername());
         return generateToken(new HashMap<>(), userDetails);
     }
 
@@ -49,12 +55,14 @@ public class JwtUtil {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs)) // Adicionando data de expiração
                 .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
+        logger.debug("Validando token para o usuário: {}", username);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 

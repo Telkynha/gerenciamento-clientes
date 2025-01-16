@@ -15,7 +15,7 @@ import java.util.Optional;
 public class ClienteService {
 
     private final ClienteRepository repository;
-    private final BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public Cliente salvarCliente(Cliente cliente) {
         cliente.setSenha(encoder.encode(cliente.getSenha()));

@@ -3,6 +3,8 @@ package emy.api.gerenciamento_clientes.controller;
 import emy.api.gerenciamento_clientes.dto.AuthRequest;
 import emy.api.gerenciamento_clientes.dto.AuthResponse;
 import emy.api.gerenciamento_clientes.util.JwtUtil;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +29,6 @@ public class AuthController {
         );
 
         final UserDetails user = userDetailsService.loadUserByUsername(request.getEmail());
-
         final String jwt = jwtUtil.generateToken(user);
 
         return ResponseEntity.ok(new AuthResponse(jwt));

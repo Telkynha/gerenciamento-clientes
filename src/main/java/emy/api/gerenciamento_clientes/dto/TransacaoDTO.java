@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransacaoDTO {
+    private Long contaId;
     private BigDecimal valor;
     private String descricao;
     private LocalDateTime dataHora;

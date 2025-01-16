@@ -1,6 +1,7 @@
 package emy.api.gerenciamento_clientes.service;
 
 import emy.api.gerenciamento_clientes.entity.Cliente;
+import emy.api.gerenciamento_clientes.entity.Conta;
 import emy.api.gerenciamento_clientes.exception.ClienteNotFoundException;
 import emy.api.gerenciamento_clientes.exception.LoginFailedException;
 import emy.api.gerenciamento_clientes.repository.ClienteRepository;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -18,6 +20,10 @@ public class ClienteService {
     private final PasswordEncoder encoder;
 
     public Cliente salvarCliente(Cliente cliente) {
+        Conta novaConta = new Conta();
+        novaConta.setSaldo(BigDecimal.ZERO);
+        cliente.setConta(novaConta);
+
         cliente.setSenha(encoder.encode(cliente.getSenha()));
         return repository.save(cliente);
     }

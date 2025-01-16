@@ -27,6 +27,7 @@ public class ContaMapper {
 
         List<TransacaoDTO> historico = conta.getHistorico().stream()
                 .map(transacao -> new TransacaoDTO(
+                        transacao.getConta().getId(),
                         transacao.getValor(),
                         transacao.getDescricao(),
                         transacao.getDataHora(),

@@ -2,6 +2,7 @@ package emy.api.gerenciamento_clientes.service;
 
 import emy.api.gerenciamento_clientes.entity.Conta;
 import emy.api.gerenciamento_clientes.exception.ContaNotFoundException;
+import emy.api.gerenciamento_clientes.exception.SaldoInsuficienteException;
 import emy.api.gerenciamento_clientes.exception.TransacaoIllegalException;
 import emy.api.gerenciamento_clientes.repository.ContaRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +21,18 @@ public class ContaService {
                 .orElseThrow(() -> new ContaNotFoundException(id));
     }
 
-    public void atualizarSaldo(Conta conta, BigDecimal valor) {
-        BigDecimal saldoAtualizado = conta.getSaldo().add(valor);
+    public void atualizarSaldo(Conta conta) {
+        repository.save(conta);
+    }
 
-        if (saldoAtualizado.compareTo(BigDecimal.ZERO) < 0) {
-            throw new TransacaoIllegalException();
+    public void atualizarSaldo(Conta conta, BigDecimal ajuste) {
+        BigDecimal novoSaldo = conta.getSaldo().add(ajuste);
+
+        if (novoSaldo.compareTo(BigDecimal.ZERO) < 0) {
+            throw new SaldoInsuficienteException();
         }
 
-        conta.setSaldo(saldoAtualizado);
+        conta.setSaldo(novoSaldo);
         repository.save(conta);
     }
 

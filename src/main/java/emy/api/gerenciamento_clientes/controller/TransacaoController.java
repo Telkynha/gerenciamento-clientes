@@ -25,8 +25,8 @@ public class TransacaoController {
 
     @ApiOperation(value = "Criar nova transação", response = TransacaoDTO.class)
     @PostMapping
-    public ResponseEntity<TransacaoDTO> criarTransacao(@RequestBody @Valid TransacaoDTO dto) {
-        Transacao transacao = TransacaoMapper.toEntity(dto);
+    public ResponseEntity<TransacaoDTO> criarTransacao(@RequestBody @Valid TransacaoDTO request) {
+        Transacao transacao = TransacaoMapper.toEntity(request);
         Transacao transacaoSalva = service.adicionarTransacao(transacao);
         TransacaoDTO response = TransacaoMapper.toResponse(transacaoSalva);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -34,12 +34,12 @@ public class TransacaoController {
 
     @ApiOperation(value = "Editar transação", response = TransacaoDTO.class)
     @PatchMapping("/{id}")
-    public ResponseEntity<TransacaoDTO> editarTransacao(@PathVariable Long id, @RequestBody @Valid TransacaoDTO dto) {
-        Transacao transacao = service.editarTransacao(id, dto);
+    public ResponseEntity<TransacaoDTO> editarTransacao(@PathVariable Long id, @RequestBody @Valid TransacaoDTO request) {
+        Transacao transacao = service.editarTransacao(id, request);
         return ResponseEntity.ok(TransacaoMapper.toResponse(transacao));
     }
 
-    @ApiOperation(value = "Deletar transação", response = Void.class)
+    @ApiOperation(value = "Deletar transação")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarTranscao(@PathVariable Long id) {
         service.deletarTransacao(id);

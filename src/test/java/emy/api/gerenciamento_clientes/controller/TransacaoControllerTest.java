@@ -1,6 +1,7 @@
 package emy.api.gerenciamento_clientes.controller;
 
 import emy.api.gerenciamento_clientes.dto.TransacaoDTO;
+import emy.api.gerenciamento_clientes.entity.Conta;
 import emy.api.gerenciamento_clientes.entity.Transacao;
 import emy.api.gerenciamento_clientes.service.TransacaoService;
 import org.junit.jupiter.api.Assertions;
@@ -36,6 +37,7 @@ class TransacaoControllerTest {
         transacao = new Transacao();
         transacao.setId(1L);
         transacao.setValor(new BigDecimal(100));
+        transacao.setConta(new Conta());
     }
 
     @Test

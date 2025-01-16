@@ -27,7 +27,7 @@ public class ContaService {
             throw new TransacaoIllegalException();
         }
 
-        conta.setSaldo(conta.getSaldo().add(valor));
+        conta.setSaldo(saldoAtualizado);
         repository.save(conta);
     }
 

@@ -5,7 +5,7 @@ import emy.api.gerenciamento_clientes.exception.ClienteNotFoundException;
 import emy.api.gerenciamento_clientes.exception.LoginFailedException;
 import emy.api.gerenciamento_clientes.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class ClienteService {
 
     private final ClienteRepository repository;
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder encoder;
 
     public Cliente salvarCliente(Cliente cliente) {
         cliente.setSenha(encoder.encode(cliente.getSenha()));
